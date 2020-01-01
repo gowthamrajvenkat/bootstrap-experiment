@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Provider website builder</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+        <style>
+            .services {
+                border: 2px solid gray;
+                border-radius: 5px;
+                height: 100px;
+            }
+        
+            .green {
+                background-color: green;
+            }
+        
+            .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: rgb(0, 26, 255);
+                color: white;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="jumbotron text-center green">
+            <h1>Provider Microsite Builder</h1>
+        </div>
+        <div class="container">
+            <form id="provdetails">
+                <div id="basicDetails">
+                    <h2>Provider Basic Details</h2>
+                    <div class="form-group">
+                        <label for="name">Provider Name:</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter Name" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="facName">Clinic/ Facility Name:</label>
+                        <input type="text" class="form-control" name="facName" placeholder="Enter Clinic/ Facility Name" id="facName">
+                    </div>
+                    <div class="form-group">
+                        <label for="tagLine">Tag Line:</label>
+                        <input type="text" class="form-control" name="tagLine" placeholder="Enter a tag line" id="tagLine">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telNo">Phone Number:</label>
+                        <input type="tel" class="form-control" name="telNo" placeholder="Enter phone number" id="telNo">
+                    </div>
+                    <div class="form-group">
+                        <label for="availHrs">Available Hours:</label>
+                        <input type="text" class="form-control" name="availHrs" placeholder="Enter email" id="availHrs">
+                    </div>
+                
+                    <button type="reset" class="btn btn-danger">Reset</button>&nbsp;&nbsp;
+                    <button type="button" id="btnBasicDetails" class="btn btn-primary" onclick="btnBasicDetailsClick()">Next >></button>
+                </div>
+                
+                <div id="servicesAvailable" style="display: none;">
+                    <h2>Provider Available Services</h2>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#AllServices">All Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#menu1">Service Category 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#menu2">Service Category 2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#menu3">Service Category 3</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="AllServices" class="container tab-pane active"><br>
+                            <div id="AllServicesItems" class = "row">
+                            </div>
+                        </div>
+                        <div id="menu1" class="container tab-pane fade"><br>
+                            <div id="ServiceCat1Items" class="row">
+                            </div>
+                        </div>
+                        <div id="menu2" class="container tab-pane fade"><br>
+                            <div id="ServiceCat2Items" class="row">
+                            </div>
+                        </div>
+                        <div id="menu3" class="container tab-pane fade"><br>
+                            <div id="ServiceCat3Items" class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="reset" class="btn btn-danger" onClick="resetServices()">Reset</button>&nbsp;&nbsp;
+                    <button type="button" id="btnServicesAvailablePrev" class="btn btn-primary" onclick="btnServicesAvailablePrevClick()"><< Previous </button>
+                    <button type="button" id="btnServicesAvailableNext" class="btn btn-primary" onclick="btnServicesAvailableNextClick()">Next >></button>
+                </div>
+                <div id="ContactDetails" style="display: none;">
+                    <h2>Provider Contact Details</h2>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" name="address" placeholder="Enter address" id="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="landmark">Landmark:</label>
+                        <input type="text" class="form-control" name="landmark" placeholder="Enter Landmark" id="landmark">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointHrs">Hours and Appoinments:</label>
+                        <input type="text" class="form-control" name="appointHrs" placeholder="Enter email" id="appointHrs">
+                    </div>
+                    <button type="reset" class="btn btn-danger">Reset</button>&nbsp;&nbsp;
+                    <button type="button" id="btnContactDetailsPrev" class="btn btn-primary" onclick="btnContactDetailsPrevClick()"><< Previous </button>
+                    <button type="submit" id="btnFormSubmit" class="btn btn-primary" >Submit</button>
+                </div>
+            </form>
+        </div>
+        
+    </body>
+    <script lang="javascript">
+        var selectedServices = [];
+        $(document).ready(populateServices());
+        function btnBasicDetailsClick(){
+            $(document.getElementById("basicDetails")).hide();
+            $(document.getElementById("servicesAvailable")).show();
+        }
+
+        function btnServicesAvailablePrevClick(){
+            $(document.getElementById("servicesAvailable")).hide();
+            $(document.getElementById("basicDetails")).show();
+        }
+
+        function btnServicesAvailableNextClick(){
+            $(document.getElementById("servicesAvailable")).hide();
+            $(document.getElementById("ContactDetails")).show();
+        }
+
+        function btnContactDetailsPrevClick(){
+            $(document.getElementById("ContactDetails")).hide();
+            $(document.getElementById("servicesAvailable")).show();
+        }
+
+        function populateServices(){
+            var services_all = ['Service name 1', 'Service name 2', 'Service name 3', 'Service name 4', 'Service name 5',
+            'Service name 6', 'Service name 7', 'Service name 8', 'Service name 9', 'Service name 10',
+            'Service name 11', 'Service name 12', 'Service name 13', 'Service name 14', 'Service name 15'];
+            services_all.forEach(function(item){
+                $(document.getElementById("AllServicesItems")).append(
+                    "<div class=\"col-sm-4 services\" name=\"" + item + "\" onclick=\"serviceClick(this)\" >" + item + "</div>" 
+                    )
+                }
+            )
+            var services_cat1 = ['Service name 1', 'Service name 2', 'Service name 3', 'Service name 4', 'Service name 5',
+            'Service name 6', 'Service name 7', 'Service name 8', 'Service name 9', 'Service name 10'];
+            services_cat1.forEach(function(item){
+                $(document.getElementById("ServiceCat1Items")).append(
+                    "<div class=\"col-sm-4 services\" name=\"" + item + "\" onclick=\"serviceClick(this)\" >" + item + "</div>"
+                    )
+                }
+            )
+            var services_cat2 = ['Service name 11', 'Service name 12', 'Service name 13', 'Service name 14', 'Service name 15'];
+            services_cat2.forEach(function(item){
+                $(document.getElementById("ServiceCat2Items")).append(
+                    "<div class=\"col-sm-4 services\" name=\"" + item + "\" onclick=\"serviceClick(this)\" >" + item + "</div>"
+                    )
+                }
+            )
+            var services_cat3 = ['Service name 1', 'Service name 12', 'Service name 3', 'Service name 14', 'Service name 5',
+            'Service name 16', 'Service name 7', 'Service name 18', 'Service name 9', 'Service name 20'];
+            services_cat3.forEach(function(item){
+                $(document.getElementById("ServiceCat3Items")).append(
+                    "<div class=\"col-sm-4 services\" name=\"" + item + "\" onclick=\"serviceClick(this)\" >" + item + "</div>"
+                    )
+                }
+            )
+        }
+
+        function serviceClick(id){
+            var service = $(document.getElementsByName(id.innerText));
+            if (service.hasClass('green')){
+                service.removeClass('green');
+                delete selectedServices[selectedServices.indexOf(id.innerText)];
+            }
+            else{
+                service.addClass('green');
+                selectedServices.push(id.innerText);
+            }
+        }
+
+        function resetServices(){
+            selectedServices = [];
+            $(document.getElementsByClassName('col-sm-4')).removeClass('green');
+        }
+
+        $(document.getElementById('provdetails')).submit(function(){alert('submitted' + selectedServices.toString())});
+    </script>
+</html>
